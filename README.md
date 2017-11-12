@@ -1,1 +1,1 @@
-GDAX Powershell functions which will be moved into a module, work in progress. 
+GDAX Powershell functions which will be moved into a module, work in progress!

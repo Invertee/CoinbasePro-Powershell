@@ -1,5 +1,5 @@
 ﻿    # Variables
-    $sec = Import-Csv $psscriptroot\GDAX-Det.csv
+    $sec = Import-Csv .\GDAX-Det.csv
     $GDAXKey = $sec.key
     $GDAXSecret = $sec.secret
     $GDAXPhrase = $sec.phrase
@@ -140,6 +140,34 @@
         Write-Output $response
     }
 
+    function Get-GDAXOrder {
+        
+        Param(
+        [parameter(Mandatory=$true)]$OrderID
+        )
+        $api.url = "/orders/$OrderID"
+        $api.method = 'GET'
+
+        $response = Invoke-Request $api
+
+        Write-Output $response
+    }
+
+    function Get-GDAXOrders {
+        
+        Param(
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD",IgnoreCase = $false)]$ProductID
+        )
+        $api.url = "/orders"
+        $api.method = 'GET'
+
+        if ($ProductID) {$api.url += "?product_id=$ProductID"}
+
+        $response = Invoke-Request $api
+
+        Write-Output $response
+    }
+
     function Get-GDAXProductOrderBook {
         
         Param(
@@ -154,7 +182,7 @@
         Write-Output $response
     }
 
-    function Get-GDAXProductticker {
+    function Get-GDAXProductTicker {
         
         Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID)
         $api.url = "/products/$ProductID/ticker"
@@ -184,14 +212,16 @@
         Write-Output $response
     }
 
+
+
     # Post Requests
 
     function New-GDAXLimitOrder {
 
         Param(
             [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
-            [parameter(Mandatory=$true)][int]$Price,
-            [parameter(Mandatory=$true)][int]$Size,
+            [parameter(Mandatory=$true)]$Price,
+            [parameter(Mandatory=$true)]$Size,
             [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
             [parameter(Mandatory=$false)]$OrderID,
             [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
@@ -230,7 +260,7 @@
                     [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
                     [parameter(Mandatory=$false)]$OrderID,
                     [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
-                    [parameter(Mandatory=$false)][int]$Funds
+                    [parameter(Mandatory=$false)]$Funds
                     )
 
                 # Build response 
@@ -249,7 +279,38 @@
                 Write-Output $response
         
             }
-        
+
+    function New-GDAXStopOrder {
+                
+                Param(
+                    [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
+                    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
+                    [parameter(Mandatory=$false)]$OrderID,
+                    [parameter(Mandatory=$true)]$Price,
+                    [parameter(Mandatory=$false)]$Size,
+                    [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
+                    [parameter(Mandatory=$false)]$Funds
+                    )
+        #TODO: Stick some validation for size and funds
+
+                # Build response 
+                $post = @{}
+                $post.side = "$side"
+                $post.price = "$Price"
+                $post.product_id = "$ProductID"
+                $post.type = "stop"
+                if ($OrderID) {$post.client_oid = $OrderID}
+                if ($STP) {$post.stp = $STP}
+                if ($size) {$post.size = "$size"}
+                if ($Funds) {$post.funds = "$Funds"}
+
+                $api.method = 'POST'
+                $api.url = "/orders"
+                $api.body = ($post | ConvertTo-Json)
+                $response = Invoke-Request $api
+                Write-Output $response
+                
+            }
 
     
     # Delete requests

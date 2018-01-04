@@ -127,7 +127,7 @@
         
         Param(
         [parameter(Mandatory=$false)]$OrderID,
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
         $api.url = "/fills"
         $api.method = 'GET'
@@ -156,7 +156,7 @@
     function Get-GDAXOrders {
         
         Param(
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD",IgnoreCase = $false)]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
         $api.url = "/orders"
         $api.method = 'GET'
@@ -172,7 +172,7 @@
         
         Param(
         [parameter(Mandatory=$false)][ValidateSet("1","2","3")]$level,
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
         $api.url = "/products/$ProductID/book"
         $api.method = 'GET'
@@ -184,7 +184,7 @@
 
     function Get-GDAXProductTicker {
         
-        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID)
+        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID)
         $api.url = "/products/$ProductID/ticker"
         $api.method = 'GET'
         $response = Invoke-Request $api
@@ -194,7 +194,7 @@
 
     function Get-GDAXProductTrades {
         
-        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID)
+        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID)
         $api.url = "/products/$ProductID/trades"
         $api.method = 'GET'
         $response = Invoke-Request $api
@@ -204,7 +204,7 @@
 
     function Get-GDAXProductStats {
         
-        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID)
+        Param([parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID)
         $api.url = "/products/$ProductID/stats"
         $api.method = 'GET'
         $response = Invoke-Request $api
@@ -222,7 +222,7 @@
             [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
             [parameter(Mandatory=$true)]$Price,
             [parameter(Mandatory=$true)]$Size,
-            [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
+            [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
             [parameter(Mandatory=$false)]$OrderID,
             [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
             [parameter(Mandatory=$false)][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,
@@ -257,7 +257,7 @@
         
                 Param(
                     [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
-                    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
+                    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
                     [parameter(Mandatory=$false)]$OrderID,
                     [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
                     [parameter(Mandatory=$false)]$Funds
@@ -284,7 +284,7 @@
                 
                 Param(
                     [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
-                    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID,
+                    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
                     [parameter(Mandatory=$false)]$OrderID,
                     [parameter(Mandatory=$true)]$Price,
                     [parameter(Mandatory=$false)]$Size,
@@ -317,7 +317,7 @@
 
     function Stop-GDAXOrder {
         
-        Param([parameter(Mandatory=$false)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD")]$ProductID)
+        Param([parameter(Mandatory=$false)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID)
         $api.url = "/orders"
         $api.method = 'DELETE'
 

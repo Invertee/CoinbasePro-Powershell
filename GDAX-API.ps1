@@ -385,7 +385,6 @@
         [parameter(Mandatory=$false)]$Funds
         )
 
-
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"

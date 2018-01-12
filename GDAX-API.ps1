@@ -8,8 +8,13 @@
         "passphrase" = ''
     }
 
+    function HMAC {
 
-    function HMAC($message, $secret) {
+        Param(
+        [Parameter()] $message,
+        [Parameter()] $secret    
+        )
+
         $hmacsha = New-Object System.Security.Cryptography.HMACSHA256
         $hmacsha.key = [Convert]::FromBase64String($secret)
         $signature = $hmacsha.ComputeHash([Text.Encoding]::ASCII.GetBytes($message))
@@ -18,13 +23,16 @@
     }
 
 
-    function Invoke-Request($request) {
+    function Invoke-Request {
+
+        Param (
+        [Parameter()] $request    
+        )
+
         $unixEpochStart = Get-Date -Date "01/01/1970"
         $now = Get-Date
         $timestamp = (New-TimeSpan -Start $unixEpochStart -End $now.ToUniversalTime()).TotalSeconds
-        # round timestamp to 3 decimal places and convert to string
         $timestamp = ([math]::Round($timestamp, 3)).ToString()
-        # create the prehash string by concatenating required parts
         $prehash = $timestamp + $request.method.ToUpper() + $request.url + $request.body
         $signature_b64 = HMAC -message $prehash -secret $request.secret
         $header = @{
@@ -56,11 +64,12 @@
 
     }
 
+
     # Get requests.
     function Get-GDAXAccount { 
         
         Param(
-        [Parameter(Mandatory=$false)] [string] $AccountID,
+        [Parameter()] [string] $AccountID,
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase
@@ -180,7 +189,7 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,   
-        [parameter(Mandatory=$false)]$OrderID,
+        [parameter()]$OrderID,
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
@@ -249,7 +258,7 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,  
-        [parameter(Mandatory=$false)][ValidateSet("1","2","3")]$level,
+        [parameter()][ValidateSet("1","2","3")]$level,
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
@@ -311,7 +320,8 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID)
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
+        )
         
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
@@ -319,6 +329,7 @@
 
         $api.url = "/products/$ProductID/stats"
         $api.method = 'GET'
+
         $response = Invoke-Request $api
 
         Write-Output $response
@@ -334,15 +345,15 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
         [parameter(Mandatory=$true)]$Price,
         [parameter(Mandatory=$true)]$Size,
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
-        [parameter(Mandatory=$false)]$OrderID,
-        [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
-        [parameter(Mandatory=$false)][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,
-        [parameter(Mandatory=$false)]$CancelAfter,
-        [parameter(Mandatory=$false)][ValidateSet("true","false")]$PostOnly
+        [parameter()]$OrderID,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,
+        [parameter()]$CancelAfter,
+        [parameter()][ValidateSet("true","false")]$PostOnly
         )
 
         $api.key = "$APIKey"
@@ -366,6 +377,24 @@
         $api.method = 'POST'
         $api.url = "/orders"
         $api.body = ($post | ConvertTo-Json)
+
+        Write-Debug -Message "$Side Limit order:
+        Size: $Size
+        Product: $ProductID
+        Price: $Price
+        STP: $STP
+        Time in Force: $TimeinForce
+        Cancel After: $CancelAfter
+        Post Only: $PostOnly
+        OrderID: $OrderID
+        
+        API Key: $APIKEY
+        API Secret: $APISECRET
+        API Phrase: $APIPHRASE
+        "
+
+
+        
         $response = Invoke-Request $api
         Write-Output $response
 
@@ -378,12 +407,22 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
-        [parameter(Mandatory=$false)]$OrderID,
-        [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
-        [parameter(Mandatory=$false)]$Funds
+        [parameter()]$OrderID,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()]$Size,
+        [parameter()]$Funds
         )
+
+        if ($Size -and $Funds) {
+        Write-Error "The size and funds parameters cannot be used together."
+        Break
+        }
+        if (-Not ($Size) -and (-Not($Funds))) {
+        Write-Error "Size or Funds parameter required."
+        Break
+        }
 
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
@@ -392,7 +431,8 @@
         # Build response 
         $post = @{}
         $post.side = "$side"
-        $post.funds = "$Funds"
+        if ($Size) {$post.size = "$Size"}
+        if ($Funds) {$post.funds = "$Funds"}
         $post.product_id = "$ProductID"
         $post.type = "market"
         if ($OrderID) {$post.client_oid = $OrderID}
@@ -401,6 +441,14 @@
         $api.method = 'POST'
         $api.url = "/orders"
         $api.body = ($post | ConvertTo-Json)
+
+        Write-Debug -Message "$Side Market order:
+        Size: $Size
+        Funds: $Funds
+        Product: $ProductID
+        STP: $STP
+        OrderID: $OrderID"
+
         $response = Invoke-Request $api
         Write-Output $response
         
@@ -412,15 +460,24 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("sell","buy")]$Side,
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
-        [parameter(Mandatory=$false)]$OrderID,
+        [parameter()]$OrderID,
         [parameter(Mandatory=$true)]$Price,
-        [parameter(Mandatory=$false)]$Size,
-        [parameter(Mandatory=$false)][ValidateSet("dd","co","cn","cb")][string]$STP,
-        [parameter(Mandatory=$false)]$Funds
+        [parameter()]$Size,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()]$Funds
         )
 
+        if ($Size -and $Funds) {
+        Write-Error "The size and funds parameters cannot be used together."
+        Break
+        }
+        if (-Not ($Size) -and (-Not($Funds))) {
+        Write-Error "Size or Funds parameter required."
+        Break
+        }
+        
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -441,6 +498,15 @@
         $api.method = 'POST'
         $api.url = "/orders"
         $api.body = ($post | ConvertTo-Json)
+
+        Write-Debug -Message "$Side Stop order:
+        Price: $Price
+        Size: $Size
+        Funds: $Funds
+        Product: $ProductID
+        STP: $STP
+        OrderID: $OrderID"
+
         $response = Invoke-Request $api
         Write-Output $response
                 
@@ -455,7 +521,7 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,    
-        [parameter(Mandatory=$false)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
         $api.key = "$APIKey"

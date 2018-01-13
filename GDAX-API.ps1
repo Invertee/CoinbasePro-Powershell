@@ -88,31 +88,45 @@
     }
     
     function Get-GDAXAccountHistory { 
-        <#
-        TODO: Impliment pagination - https://docs.gdax.com/#pagination
-        Only gets last 100 results.
-        #>
+
         Param([parameter(Mandatory=$true)]$AccountID,
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit = "20"
         )
 
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
-        
+
         $api.method = 'GET'
         $api.url = "/accounts/$AccountID/ledger"
+
+        if ($Before -or $After -or $Limit) {
+            
+            $array = @{}
+            if ($Before) {$array.Add("before","$Before")}
+            if ($After) {$array.Add("after","$After")}
+            if ($Limit) {$array.Add("limit","$Limit")}
+    
+            $api.url += '?'
+            ForEach ($itm in $array) {
+                if ($array.before) {$api.url += "&before=$Before"}
+                if ($array.after) {$api.url += "&after=$After"}
+                if ($array.limit) {$api.url += "&limit=$Limit"}            
+            }
+            Write-Debug $api.url
+
         $response = Invoke-Request $api
         Write-Output $response
     }
+}
 
     function Get-GDAXAccountHolds { 
-        <#
-        TODO: Impliment pagination - https://docs.gdax.com/#pagination
-        Only gets last 100 results.
-        #>
+        
         Param([parameter(Mandatory=$true)]$AccountID,
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
@@ -183,6 +197,7 @@
         Write-Output $response
     }
 
+
     function Get-GDAXFills {
         
         Param(
@@ -190,7 +205,10 @@
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,   
         [parameter()]$OrderID,
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit
         )
 
         $api.key = "$APIKey"
@@ -199,15 +217,29 @@
 
         $api.url = "/fills"
         $api.method = 'GET'
+        if ($OrderID -or $ProductID -or $Before -or $After -or $Limit) {
+        
+        $array = @{}
+        if ($OrderID) {$array.Add("order","$OrderID")}
+        if ($ProductID) {$array.Add("product","$ProductID")}
+        if ($Before) {$array.Add("before","$Before")}
+        if ($After) {$array.Add("after","$After")}
+        if ($Limit) {$array.Add("limit","$Limit")}
 
-        if ($OrderID) {$api.url += "?order_id=$OrderID"}
-        if ($ProductID) {$api.url += "?product_id=$ProductID"}
+        $api.url += '?'
+        ForEach ($itm in $array) {
+            if ($array.order) {$api.url += "&order_id=$OrderID"}
+            if ($array.product) {$api.url += "&product_id=$ProductID"}
+            if ($array.before) {$api.url += "&before=$Before"}
+            if ($array.after) {$api.url += "&after=$After"}
+            if ($array.limit) {$api.url += "&limit=$Limit"}            
+        }
 
+        Write-Debug $api.url
         $response = Invoke-Request $api
-
         Write-Output $response
     }
-
+}
     function Get-GDAXOrder {
         
         Param(
@@ -224,8 +256,8 @@
         $api.url = "/orders/$OrderID"
         $api.method = 'GET'
 
+        Write-Debug $api.url
         $response = Invoke-Request $api
-
         Write-Output $response
     }
 
@@ -235,7 +267,11 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,   
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
+        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+        [Parameter()][ValidateSet("open","pending","active")] $Status,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit
         )
         
         $api.key = "$APIKey"
@@ -245,12 +281,30 @@
         $api.url = "/orders"
         $api.method = 'GET'
 
-        if ($ProductID) {$api.url += "?product_id=$ProductID"}
+        if ($Status -or $ProductID -or $Before -or $After -or $Limit) {
+            
+            $array = @{}
+            if ($Status) {$array.Add("status","$Status")}
+            if ($ProductID) {$array.Add("product","$ProductID")}
+            if ($Before) {$array.Add("before","$Before")}
+            if ($After) {$array.Add("after","$After")}
+            if ($Limit) {$array.Add("limit","$Limit")}
+    
+            $api.url += '?'
+            ForEach ($itm in $array) {
+                if ($array.status) {$api.url += "&status=$Status"}
+                if ($array.product) {$api.url += "&product_id=$ProductID"}
+                if ($array.before) {$api.url += "&before=$Before"}
+                if ($array.after) {$api.url += "&after=$After"}
+                if ($array.limit) {$api.url += "&limit=$Limit"}            
+            }
+    
+            Write-Debug $api.url
 
         $response = Invoke-Request $api
-
         Write-Output $response
     }
+}
 
     function Get-GDAXProductOrderBook {
         
@@ -386,15 +440,8 @@
         Time in Force: $TimeinForce
         Cancel After: $CancelAfter
         Post Only: $PostOnly
-        OrderID: $OrderID
-        
-        API Key: $APIKEY
-        API Secret: $APISECRET
-        API Phrase: $APIPHRASE
-        "
+        OrderID: $OrderID"
 
-
-        
         $response = Invoke-Request $api
         Write-Output $response
 
@@ -482,8 +529,6 @@
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
 
-        #TODO: Stick some validation for size and funds
-
         # Build response 
         $post = @{}
         $post.side = "$side"
@@ -518,6 +563,7 @@
     function Stop-GDAXOrder {
         
         Param(
+        [Parameter()] [string] $OrderID,
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,    
@@ -529,8 +575,10 @@
         $api.passphrase = "$APIPhrase"
 
         $api.url = "/orders"
+        if ($orderID) {$api.url = "/orders/$OrderID"}
         $api.method = 'DELETE'
         if ($ProductID) {$api.url += "?product_id=$ProductID"}
+
         $response = Invoke-Request $api
         Write-Output $response
     }

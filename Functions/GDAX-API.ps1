@@ -7,65 +7,7 @@
         "secret" = ''
         "passphrase" = ''
     }
-
-    function HMAC {
-
-        Param(
-        [Parameter()] $message,
-        [Parameter()] $secret    
-        )
-
-        $hmacsha = New-Object System.Security.Cryptography.HMACSHA256
-        $hmacsha.key = [Convert]::FromBase64String($secret)
-        $signature = $hmacsha.ComputeHash([Text.Encoding]::ASCII.GetBytes($message))
-        $signature = [Convert]::ToBase64String($signature)
-        return $signature
-    }
-
-
-    function Invoke-Request {
-
-        Param (
-        [Parameter()] $request    
-        )
-
-        $unixEpochStart = Get-Date -Date "01/01/1970"
-        $now = Get-Date
-        $timestamp = (New-TimeSpan -Start $unixEpochStart -End $now.ToUniversalTime()).TotalSeconds
-        $timestamp = ([math]::Round($timestamp, 3)).ToString()
-        $prehash = $timestamp + $request.method.ToUpper() + $request.url + $request.body
-        $signature_b64 = HMAC -message $prehash -secret $request.secret
-        $header = @{
-            "CB-ACCESS-KEY" = $request.key
-            "CB-ACCESS-SIGN" = $signature_b64
-            "CB-ACCESS-TIMESTAMP" = $timestamp
-            "CB-ACCESS-PASSPHRASE" = $request.passphrase
-            "Content-Type" = 'application/json'
-        }
-        $uri = $request.endpoint + $request.url
-        if ($request.method.ToUpper() -eq 'POST') {
-            try {$response = Invoke-RestMethod -Method $request.method -Uri $uri -Headers $header -Body $request.body}
-            catch {$Statuscode = $_.Exception.response.Statuscode}
-        } else {
-            try {$response = Invoke-RestMethod -Method $request.method -Uri $uri -Headers $header}
-            catch {$Statuscode = $_.Exception.response.Statuscode}
-        }
-
-        if ($Statuscode) {
-        if ($Statuscode -eq 400) {Write-Error -Message "Bad Request – Invalid request format"}    
-        if ($Statuscode -eq 401) {Write-Error -Message "Unauthorized – Invalid API Key"}  
-        if ($Statuscode -eq 403) {Write-Error -Message "Forbidden – You do not have access to the requested resource"}  
-        if ($Statuscode -eq 403) {Write-Error -Message "Not Found"}  
-        if ($Statuscode -eq 500) {Write-Error -Message "Internal Server Error"} 
-        } else {
-        return $response  
-        }
-        
-
-    }
-
-
-    # Get requests.
+    
     function Get-GDAXAccount { 
         
         Param(
@@ -142,61 +84,6 @@
         $response = Invoke-Request $api
         Write-Output $response
     }
-
-    function Get-GDAXProducts {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase                    
-        )
-        
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.method = 'GET'
-        $api.url = "/products"
-        $response = Invoke-Request $api
-        Write-Output $response
-    }
-
-    function Get-GDAXCurrencies {   
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase                    
-        )
-
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"                
-
-        $api.method = 'GET'
-        $api.url = "/currencies"
-        $response = Invoke-Request $api
-        Write-Output $response
-    }
-
-    function Get-GDAXTime {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase                    
-        )
-
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.method = 'GET'
-        $api.url = "/time"
-        $response = Invoke-Request $api
-        Write-Output $response
-    }
-
 
     function Get-GDAXFills {
         
@@ -306,93 +193,6 @@
     }
 }
 
-    function Get-GDAXProductOrderBook {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase,  
-        [parameter()][ValidateSet("1","2","3")]$level,
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
-        )
-
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.url = "/products/$ProductID/book"
-        $api.method = 'GET'
-        if ($Level) {$api.url += "?level=$level"}
-        $response = Invoke-Request $api
-
-        Write-Output $response
-    }
-
-    function Get-GDAXProductTicker {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
-        )
-
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.url = "/products/$ProductID/ticker"
-        $api.method = 'GET'
-        $response = Invoke-Request $api
-
-        Write-Output $response
-    }
-
-    function Get-GDAXProductTrades {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase,     
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
-        )
-
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.url = "/products/$ProductID/trades"
-        $api.method = 'GET'
-        $response = Invoke-Request $api
-
-        Write-Output $response
-    }
-
-    function Get-GDAXProductStats {
-        
-        Param(
-        [Parameter(Mandatory=$true)] $APIKey,
-        [Parameter(Mandatory=$true)] $APISecret,
-        [Parameter(Mandatory=$true)] $APIPhrase, 
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
-        )
-        
-        $api.key = "$APIKey"
-        $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"
-
-        $api.url = "/products/$ProductID/stats"
-        $api.method = 'GET'
-
-        $response = Invoke-Request $api
-
-        Write-Output $response
-    }
-
-
-
-    # Post Requests
-
     function New-GDAXLimitOrder {
 
         Param(
@@ -446,7 +246,6 @@
         Write-Output $response
 
     }
-
 
     function New-GDAXMarketOrder {
         
@@ -557,10 +356,7 @@
                 
     }
 
-    
-    # Delete requests
-
-    function Stop-GDAXOrder {
+        function Stop-GDAXOrder {
         
         Param(
         [Parameter()] [string] $OrderID,
@@ -581,4 +377,5 @@
 
         $response = Invoke-Request $api
         Write-Output $response
-    }
+        }
+    

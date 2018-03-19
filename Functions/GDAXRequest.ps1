@@ -39,7 +39,7 @@ function Invoke-Request {
             }
             
         }
-        $response
+        Return $response
         }
 
 function Get-HMAC {

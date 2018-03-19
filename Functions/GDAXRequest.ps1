@@ -9,7 +9,7 @@ function Invoke-Request {
     $Timestamp = (New-TimeSpan -Start $EpochStart -End $Now.ToUniversalTime()).TotalSeconds
     $Timestamp = ([math]::Round($Timestamp, 3)).ToString()
     $Prehash = $Timestamp + $request.method.ToUpper() + $request.url + $request.body
-    $Signature_b64 = Calculate-HMAC -Message $prehash -Secret $request.secret
+    $Signature_b64 = Get-HMAC -Message $prehash -Secret $request.secret
     $Header = @{
         "CB-ACCESS-KEY" = $request.key
         "CB-ACCESS-SIGN" = $signature_b64
@@ -20,26 +20,29 @@ function Invoke-Request {
     $Uri = $request.endpoint + $request.url
     if ($request.method.ToUpper() -eq 'POST') {
         try {$response = Invoke-RestMethod -Method $request.method -Uri $uri -Headers $header -Body $request.body}
-        catch {$Statuscode = $_.Exception.response.Statuscode}
+        catch {$Statuscode = $_.exception.message}
     } else {
         try {$response = Invoke-RestMethod -Method $request.method -Uri $uri -Headers $header}
-        catch {$Statuscode = $_.Exception.response.Statuscode}
+        catch {$Statuscode = $_.exception.message}
     }
-
-    <#
+        
     if ($Statuscode) {
-    if ($Statuscode -eq 400) {Write-Error -Message "Bad Request – Invalid request format"}    
-    if ($Statuscode -eq 401) {Write-Error -Message "Unauthorized – Invalid API Key"}  
-    if ($Statuscode -eq 403) {Write-Error -Message "Forbidden – You do not have access to the requested resource"}  
-    if ($Statuscode -eq 403) {Write-Error -Message "Not Found"}  
-    if ($Statuscode -eq 500) {Write-Error -Message "Internal Server Error"} 
-    } else {
-    return $response 
-    #>
-    $response  
-    }
+            $Errorcode = $Statuscode | Select-String -Pattern '\d{3,3}'
+            $Errorcode = $Errorcode.Matches.Value
+            
+        Switch ($Errorcode) {
+            '400' {Write-Error "Bad Request. Invalid request format"}
+            '401' {Write-Error "Unauthorized. Invalid API Key"}
+            '403' {Write-Error "Forbidden. You do not have access to the requested resource"} 
+            '404' {Write-Error "Not Found"}
+            '500' {Write-Error "Internal Server Error"} 
+            }
+            
+        }
+        $response
+        }
 
-function Calculate-HMAC {
+function Get-HMAC {
     Param(
     [Parameter()] $Message,
     [Parameter()] $Secret    

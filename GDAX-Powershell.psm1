@@ -19,7 +19,7 @@ $FunctionsToExport = @(
     'New-GDAXStopOrder',
     'Stop-GDAXOrder',
     'Invoke-Request',
-    'Calculate-HMAC'
+    'Get-HMAC'
 )
 
 Export-ModuleMember -Function $FunctionsToExport

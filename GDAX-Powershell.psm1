@@ -18,7 +18,7 @@ $FunctionsToExport = @(
     'New-GDAXMarketOrder',
     'New-GDAXStopOrder',
     'Stop-GDAXOrder',
-    'Invoke-Request',
+    'Invoke-GDAXRequest',
     'Get-HMAC'
 )
 

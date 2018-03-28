@@ -21,7 +21,7 @@
 
         $api.method = 'GET'
         $api.url = "/products"
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 
@@ -40,7 +40,7 @@
 
         $api.method = 'GET'
         $api.url = "/currencies"
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 
@@ -58,7 +58,7 @@
 
         $api.method = 'GET'
         $api.url = "/time"
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 
@@ -79,7 +79,7 @@
         $api.url = "/products/$ProductID/book"
         $api.method = 'GET'
         if ($Level) {$api.url += "?level=$level"}
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
 
         Write-Output $response
     }
@@ -99,7 +99,7 @@
 
         $api.url = "/products/$ProductID/ticker"
         $api.method = 'GET'
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
 
         Write-Output $response
     }
@@ -119,7 +119,7 @@
 
         $api.url = "/products/$ProductID/trades"
         $api.method = 'GET'
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
 
         Write-Output $response
     }
@@ -140,7 +140,7 @@
         $api.url = "/products/$ProductID/stats"
         $api.method = 'GET'
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
 
         Write-Output $response
     }

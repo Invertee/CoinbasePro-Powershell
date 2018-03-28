@@ -24,7 +24,7 @@
         $api.method = 'GET'
         $api.url = '/accounts'
         If ($AccountID) {$api.url += "/$AccountID"}
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     
     }
@@ -62,7 +62,7 @@
             }
             Write-Debug $api.url
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 }
@@ -81,7 +81,7 @@
 
         $api.method = 'GET'
         $api.url = "/accounts/$AccountID/holds"
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 
@@ -123,7 +123,7 @@
         }
 
         Write-Debug $api.url
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 }
@@ -144,7 +144,7 @@
         $api.method = 'GET'
 
         Write-Debug $api.url
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 
@@ -188,7 +188,7 @@
     
             Write-Debug $api.url
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
     }
 }
@@ -242,7 +242,7 @@
         Post Only: $PostOnly
         OrderID: $OrderID"
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
 
     }
@@ -295,7 +295,7 @@
         STP: $STP
         OrderID: $OrderID"
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
         
     }
@@ -351,7 +351,7 @@
         STP: $STP
         OrderID: $OrderID"
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
                 
     }
@@ -375,7 +375,7 @@
         $api.method = 'DELETE'
         if ($ProductID) {$api.url += "?product_id=$ProductID"}
 
-        $response = Invoke-Request $api
+        $response = Invoke-GDAXRequest $api
         Write-Output $response
         }
     

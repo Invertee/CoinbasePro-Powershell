@@ -1,4 +1,4 @@
-function Invoke-Request {
+function Invoke-GDAXRequest {
 
     Param (
     [Parameter()] $Request    

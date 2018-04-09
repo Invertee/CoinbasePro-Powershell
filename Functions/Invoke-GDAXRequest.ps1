@@ -30,7 +30,8 @@ function Invoke-GDAXRequest {
             $Errorcode = $Statuscode | Select-String -Pattern '\d{3,3}'
             $Errorcode = $Errorcode.Matches.Value
             
-        Switch ($Errorcode) {
+        Switch ($Errorcode) 
+            {
             '400' {Write-Error "Bad Request. Invalid request format"}
             '401' {Write-Error "Unauthorized. Invalid API Key"}
             '403' {Write-Error "Forbidden. You do not have access to the requested resource"} 

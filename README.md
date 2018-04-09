@@ -1,6 +1,7 @@
 ### Powershell Module for accessing the GDAX currency exchange API. 
 
 #### Usage
+
 ###### Public Requests
 * Get-GDAXProducts - Gets a list of all tradable products on the exchange
 * Get-GDAXCurrencies - Lists all currencies on the exchange

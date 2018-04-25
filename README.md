@@ -1,6 +1,7 @@
 ### Powershell Module for accessing the GDAX currency exchange API. 
 
-#### Usage
+#### Install (Requires PowerShellGet)
+> Install-Module -Name GDAX-Powershell
 
 ###### Public Requests
 * Get-GDAXProducts - Gets a list of all tradable products on the exchange

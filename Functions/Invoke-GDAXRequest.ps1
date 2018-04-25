@@ -55,3 +55,16 @@ function Get-HMAC {
     $signature = [Convert]::ToBase64String($signature)
     return $signature
 }
+
+Function Get-BlankAPI { 
+$api = @{
+    "endpoint" = 'https://api.gdax.com'
+    "url" = ''
+    "method" = ''
+    "body" = ''
+    "key" = ''
+    "secret" = ''
+    "passphrase" = ''
+}
+Return $api
+}

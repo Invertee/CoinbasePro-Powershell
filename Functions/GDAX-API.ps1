@@ -1,14 +1,4 @@
-﻿    $api = @{
-        "endpoint" = 'https://api.gdax.com'
-        "url" = ''
-        "method" = ''
-        "body" = ''
-        "key" = ''
-        "secret" = ''
-        "passphrase" = ''
-    }
-    
-    function Get-GDAXAccount { 
+﻿    function Get-GDAXAccount { 
         
         Param(
         [Parameter()] [string] $AccountID,
@@ -16,7 +6,8 @@
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase
         )
-    
+        
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -40,6 +31,7 @@
         [Parameter()] $Limit = "20"
         )
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -75,6 +67,7 @@
         [Parameter(Mandatory=$true)] $APIPhrase
         )
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -98,6 +91,7 @@
         [Parameter()] $Limit
         )
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -136,6 +130,7 @@
         [Parameter(Mandatory=$true)] $APIPhrase 
         )
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -161,6 +156,7 @@
         [Parameter()] $Limit
         )
         
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -210,6 +206,7 @@
         [parameter()][ValidateSet("true","false")]$PostOnly
         )
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -226,7 +223,6 @@
         if ($TimeinForce) {$post.time_in_force = $TimeinForce}
         if ($CancelAfter) {$post.cancel_after = $CancelAfter}
         if ($PostOnly) {$post.post_only = $PostOnly}
-
 
         $api.method = 'POST'
         $api.url = "/orders"
@@ -270,6 +266,7 @@
         Break
         }
 
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -324,6 +321,7 @@
         Break
         }
         
+        $api = Get-BlankAPI
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -363,17 +361,24 @@
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,
         [Parameter(Mandatory=$true)] $APIPhrase,    
-        [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
+        [parameter()][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
+        $api = Get-BlankAPI        
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
 
+        if ($OrderID -and $ProductID) {
+            Write-Error "The orderID and productID parameters cannot be used together."
+            Break
+            }
+
         $api.url = "/orders"
         if ($orderID) {$api.url = "/orders/$OrderID"}
-        $api.method = 'DELETE'
         if ($ProductID) {$api.url += "?product_id=$ProductID"}
+        $api.method = 'DELETE'
+
 
         $response = Invoke-GDAXRequest $api
         Write-Output $response

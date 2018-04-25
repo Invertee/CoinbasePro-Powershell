@@ -1,12 +1,4 @@
-    $api = @{
-        "endpoint" = 'https://api.gdax.com'
-        "url" = ''
-        "method" = ''
-        "body" = ''
-        "key" = ''
-        "secret" = ''
-        "passphrase" = ''
-    }
+
     function Get-GDAXProducts {
         
         Param(
@@ -15,6 +7,7 @@
         [Parameter(Mandatory=$false)] $APIPhrase                    
         )
         
+        $api = Get-BlankAPI        
         if ($APIKey) {$api.key = "$APIKey"}
         if ($APISecret) {$api.secret = "$APISecret"}
         if ($APIPhrase) {$api.passphrase = "$APIPhrase"}
@@ -33,10 +26,10 @@
         [Parameter(Mandatory=$false)] $APIPhrase                    
         )
 
-
+        $api = Get-BlankAPI        
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
-        $api.passphrase = "$APIPhrase"                
+        $api.passphrase = "$APIPhrase"        
 
         $api.method = 'GET'
         $api.url = "/currencies"
@@ -52,6 +45,7 @@
         [Parameter(Mandatory=$false)] $APIPhrase                    
         )
 
+        $api = Get-BlankAPI 
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -72,6 +66,7 @@
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
+        $api = Get-BlankAPI 
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -93,6 +88,7 @@
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
+        $api = Get-BlankAPI      
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -113,6 +109,7 @@
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
 
+        $api = Get-BlankAPI        
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"
@@ -133,6 +130,7 @@
         [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID
         )
         
+        $api = Get-BlankAPI        
         $api.key = "$APIKey"
         $api.secret = "$APISecret"
         $api.passphrase = "$APIPhrase"

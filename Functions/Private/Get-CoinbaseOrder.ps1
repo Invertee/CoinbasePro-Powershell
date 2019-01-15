@@ -13,8 +13,6 @@ function Get-CoinbaseOrder {
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
-    $ProductID = $ProductID.toLower()
-
     $api.url = "/orders/$OrderID"
     $api.method = 'GET'
 

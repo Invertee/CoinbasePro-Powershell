@@ -5,7 +5,7 @@ function Get-CoinbaseProductOrderBook {
     [Parameter(Mandatory=$false)] $APISecret,
     [Parameter(Mandatory=$false)] $APIPhrase,  
     [parameter()][ValidateSet("1","2","3")]$level,
-    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
 

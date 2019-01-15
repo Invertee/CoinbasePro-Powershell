@@ -5,7 +5,7 @@ function New-CoinbaseStopOrder {
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase, 
     [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
-    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
     [parameter()]$OrderID,
     [parameter(Mandatory=$true)]$Price,
     [parameter()]$Size,

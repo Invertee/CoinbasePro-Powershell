@@ -4,7 +4,7 @@ function Get-CoinbaseOrders {
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,   
-    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
     [Parameter()][ValidateSet("open","pending","active")] $Status,
     [Parameter()] $Before,
     [Parameter()] $After,

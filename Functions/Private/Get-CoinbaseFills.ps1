@@ -5,7 +5,7 @@ function Get-CoinbaseFills {
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,   
     [parameter()]$OrderID,
-    [parameter(Mandatory=$true)][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
     [Parameter()] $Before,
     [Parameter()] $After,
     [Parameter()] $Limit,

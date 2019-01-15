@@ -77,3 +77,49 @@ $api = @{
     }
 Return $api
 }
+
+Function Test-Currencies {
+
+    Param(
+        [Parameter()] [string] $Currency   
+        )
+
+    $Valid = @(
+    "BTC-USD",
+    "BCH-USD",
+    "ETH-USD",
+    "ETC-USD",
+    "LTC-USD",
+    "ZRX-USD",
+    "BTC-GBP",
+    "BCH-GBP",
+    "ETH-GBP",
+    "ETC-GBP",
+    "LTC-GBP",
+    "BTC-EUR",
+    "BCH-EUR",
+    "ETH-EUR",
+    "ETC-EUR",
+    "LTC-EUR",
+    "ETH-BTC",
+    "LTC-BTC",
+    "BCH-BTC",
+    "ETC-BTC",
+    "ZRX-BTC",
+    "BTC-USDC",
+    "ETH-USDC",
+    "BAT-USDC",
+    "ZEC-USDC",
+    "MANA-USDC",
+    "LOOM-USDC",
+    "DNT-USDC",
+    "CVC-USDC"
+    )
+
+    if ($Valid.Contains($Currency.ToUpper())) {
+        Return $true
+    } else {
+        Return $false
+    }
+
+}

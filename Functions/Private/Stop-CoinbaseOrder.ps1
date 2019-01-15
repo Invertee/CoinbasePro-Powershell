@@ -5,7 +5,7 @@ function Stop-CoinbaseOrder {
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,    
-    [parameter()][ValidateSet("BTC-GBP","BTC-EUR","ETH-BTC","ETH-EUR","LTC-BTC","LTC-EUR","LTC-USD","ETH-USD","BTC-USD","BCH-USD")]$ProductID,
+    [parameter()][ValidateScript({Test-Currencies $_})]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
 

@@ -20,7 +20,8 @@ $FunctionsToExport = @(
     'Stop-CoinbaseOrder',
     'Invoke-CoinbaseRequest',
     'Get-BlankAPI',
-    'Get-HMAC'
+    'Get-HMAC',
+    'Test-Currencies'
 
 )
 

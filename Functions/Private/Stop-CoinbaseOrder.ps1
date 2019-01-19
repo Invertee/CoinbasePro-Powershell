@@ -14,8 +14,6 @@ function Stop-CoinbaseOrder {
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
-    $ProductID = $ProductID.toLower()
-
     if ($OrderID -and $ProductID) 
     {
         Write-Error "The orderID and productID parameters cannot be used together."

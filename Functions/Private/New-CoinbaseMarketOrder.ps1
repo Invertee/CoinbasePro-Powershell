@@ -14,12 +14,12 @@ function New-CoinbaseMarketOrder {
     )
 
     if ($Size -and $Funds) {
-    Write-Error "The size and funds parameters cannot be used together."
-    Break
+        Write-Error "The size and funds parameters cannot be used together."
+        Break
     }
     if (-Not ($Size) -and (-Not($Funds))) {
-    Write-Error "Size or Funds parameter required."
-    Break
+        Write-Error "Size or Funds parameter required."
+        Break
     }
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI

@@ -5,7 +5,7 @@ function Get-CoinbaseFills {
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,   
     [parameter()]$OrderID,
-    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [Parameter()] $Before,
     [Parameter()] $After,
     [Parameter()] $Limit,
@@ -26,7 +26,7 @@ function Get-CoinbaseFills {
         Break
     }
 
-    $ProductID = $ProductID.toLower()
+    $ProductID = $ProductID.toUpper()
 
     if ($OrderID -or $ProductID -or $Before -or $After -or $Limit) 
     {
@@ -42,7 +42,7 @@ function Get-CoinbaseFills {
         ForEach ($itm in $array) 
         {
             if ($array.order) {$api.url += "&order_id=$OrderID"}
-            if ($array.product) {$api.url += "&product_id=$ProductID"}
+            if ($array.product_id) {$api.url += "&product_id=$ProductID"}
             if ($array.before) {$api.url += "&before=$Before"}
             if ($array.after) {$api.url += "&after=$After"}
             if ($array.limit) {$api.url += "&limit=$Limit"}            

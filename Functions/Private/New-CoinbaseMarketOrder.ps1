@@ -5,7 +5,7 @@ function New-CoinbaseMarketOrder {
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase, 
     [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
-    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()]$OrderID,
     [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
     [parameter()]$Size,

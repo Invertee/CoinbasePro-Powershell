@@ -7,7 +7,7 @@ function New-CoinbaseLimitOrder {
     [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
     [parameter(Mandatory=$true)]$Price,
     [parameter(Mandatory=$true)]$Size,
-    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()]$OrderID,
     [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
     [parameter()][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,

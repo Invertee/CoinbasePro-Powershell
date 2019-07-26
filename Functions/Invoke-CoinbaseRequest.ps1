@@ -16,6 +16,7 @@ function Invoke-CoinbaseRequest {
         "CB-ACCESS-TIMESTAMP" = $Timestamp
         "CB-ACCESS-PASSPHRASE" = $request.passphrase
         "Content-Type" = 'application/json'
+        "accept" = 'application/json'
     }
     $Uri = $request.endpoint + $request.url
     if ($request.method.ToUpper() -eq 'POST') {
@@ -39,9 +40,9 @@ function Invoke-CoinbaseRequest {
             '500' {Write-Error "Internal Server Error"} 
             }
             
-        }
-        Return $response
-        }
+    }
+    Return $response
+}
 
 function Get-HMAC {
     Param(
@@ -62,20 +63,20 @@ Function Get-BlankAPI {
         [Parameter()] [switch] $SandboxAPI   
         )
 
-$api = @{
-    "endpoint" = 'https://api.pro.coinbase.com'
-    "url" = ''
-    "method" = ''
-    "body" = ''
-    "key" = ''
-    "secret" = ''
-    "passphrase" = ''
-}
+    $api = @{
+        "endpoint" = 'https://api.pro.coinbase.com'
+        "url" = ''
+        "method" = ''
+        "body" = ''
+        "key" = ''
+        "secret" = ''
+        "passphrase" = ''
+    }
 
     if ($SandboxAPI) {
         $api.endpoint = "https://api-public.sandbox.pro.coinbase.com"
     }
-Return $api
+    Return $api
 }
 
 Function Test-Product {

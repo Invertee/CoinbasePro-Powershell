@@ -4,7 +4,7 @@ function Get-CoinbaseOrders {
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,   
-    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [Parameter()][ValidateSet("open","pending","active")] $Status,
     [Parameter()] $Before,
     [Parameter()] $After,
@@ -20,7 +20,7 @@ function Get-CoinbaseOrders {
     $api.url = "/orders"
     $api.method = 'GET'
 
-    $ProductID = $ProductID.toLower()
+    $ProductID = $ProductID.toUpper()
 
     if ($Status -or $ProductID -or $Before -or $After -or $Limit) 
     {
@@ -35,8 +35,8 @@ function Get-CoinbaseOrders {
         $api.url += '?'
         ForEach ($itm in $array) 
         {
-            if ($array.status) {$api.url += "&status=$Status"}
             if ($array.product) {$api.url += "&product_id=$ProductID"}
+            if ($array.status) {$api.url += "&status=$Status"}
             if ($array.before) {$api.url += "&before=$Before"}
             if ($array.after) {$api.url += "&after=$After"}
             if ($array.limit) {$api.url += "&limit=$Limit"}            

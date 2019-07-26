@@ -5,7 +5,7 @@ function Stop-CoinbaseOrder {
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,    
-    [parameter()][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter()][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
 

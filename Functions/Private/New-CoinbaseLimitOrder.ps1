@@ -21,6 +21,8 @@ function New-CoinbaseLimitOrder {
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
+    $ProductID = $ProductID.toUpper()
+
     # Build response 
     $post = @{}
     $post.side = "$side"

@@ -28,6 +28,8 @@ function New-CoinbaseStopOrder {
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
+    $ProductID = $ProductID.toUpper()
+
     # Build response 
     $post = @{}
     $post.side = "$side"

@@ -89,6 +89,7 @@ Function Test-Product {
     if ($ValidProducts.id.Contains($Product.ToUpper())) {
         Return $true
     } else {
+        Throw "Invalid Product!"
         Return $false
     }
 

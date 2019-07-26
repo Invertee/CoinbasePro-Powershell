@@ -4,7 +4,7 @@ function Get-CoinbaseProductTrades {
     [Parameter(Mandatory=$false)] $APIKey,
     [Parameter(Mandatory=$false)] $APISecret,
     [Parameter(Mandatory=$false)] $APIPhrase,     
-    [parameter(Mandatory=$true)][ValidateScript({Test-Currencies $_})]$ProductID,
+    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
 

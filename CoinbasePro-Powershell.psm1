@@ -24,5 +24,6 @@ $FunctionsToExport = @(
     'Test-Currencies'
 
 )
+Get-CoinbaseProducts | Select-Object id | ConvertTo-Csv | out-file "$env:APPDATA/CoinbaseProPS-products.csv" -Force
 
 Export-ModuleMember -Function $FunctionsToExport

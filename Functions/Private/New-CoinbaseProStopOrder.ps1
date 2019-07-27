@@ -1,5 +1,5 @@
-function New-CoinbaseMarketOrder {
-        
+function New-CoinbaseProStopOrder {
+                
     Param(
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
@@ -7,8 +7,9 @@ function New-CoinbaseMarketOrder {
     [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
     [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()]$OrderID,
-    [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+    [parameter(Mandatory=$true)]$Price,
     [parameter()]$Size,
+    [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
     [parameter()]$Funds,
     [parameter()] [switch] $SandboxAPI
     )
@@ -21,7 +22,7 @@ function New-CoinbaseMarketOrder {
         Write-Error "Size or Funds parameter required."
         Break
     }
-
+    
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
     $api.key = "$APIKey"
     $api.secret = "$APISecret"
@@ -32,25 +33,27 @@ function New-CoinbaseMarketOrder {
     # Build response 
     $post = @{}
     $post.side = "$side"
-    if ($Size) {$post.size = "$Size"}
-    if ($Funds) {$post.funds = "$Funds"}
+    $post.price = "$Price"
     $post.product_id = "$ProductID"
-    $post.type = "market"
+    $post.type = "stop"
     if ($OrderID) {$post.client_oid = $OrderID}
     if ($STP) {$post.stp = $STP}
+    if ($size) {$post.size = "$size"}
+    if ($Funds) {$post.funds = "$Funds"}
 
     $api.method = 'POST'
     $api.url = "/orders"
     $api.body = ($post | ConvertTo-Json)
 
-    Write-Debug -Message "$Side Market order:
+    Write-Debug -Message "$Side Stop order:
+    Price: $Price
     Size: $Size
     Funds: $Funds
     Product: $ProductID
     STP: $STP
     OrderID: $OrderID"
 
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-    
+            
 }

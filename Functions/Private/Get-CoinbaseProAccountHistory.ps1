@@ -1,4 +1,4 @@
-function Get-CoinbaseAccountHistory { 
+function Get-CoinbaseProAccountHistory { 
 
     Param([parameter(Mandatory=$true)]$AccountID,
     [Parameter(Mandatory=$true)] $APIKey,
@@ -34,7 +34,7 @@ function Get-CoinbaseAccountHistory {
         }
         Write-Debug $api.url
 
-        $response = Invoke-CoinbaseRequest $api
+        $response = Invoke-CoinbaseProRequest $api
         Write-Output $response
     }
 }

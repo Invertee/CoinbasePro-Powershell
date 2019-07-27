@@ -1,4 +1,4 @@
-function Get-CoinbaseCurrencies {   
+function Get-CoinbaseProProducts {
         
     Param(
     [Parameter(Mandatory=$false)] $APIKey,
@@ -6,14 +6,14 @@ function Get-CoinbaseCurrencies {
     [Parameter(Mandatory=$false)] $APIPhrase,
     [parameter()] [switch] $SandboxAPI                    
     )
-
+    
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI        
-    $api.key = "$APIKey"
-    $api.secret = "$APISecret"
-    $api.passphrase = "$APIPhrase"        
+    if ($APIKey) {$api.key = "$APIKey"}
+    if ($APISecret) {$api.secret = "$APISecret"}
+    if ($APIPhrase) {$api.passphrase = "$APIPhrase"}
 
     $api.method = 'GET'
-    $api.url = "/currencies"
-    $response = Invoke-CoinbaseRequest $api
+    $api.url = "/products"
+    $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
 }

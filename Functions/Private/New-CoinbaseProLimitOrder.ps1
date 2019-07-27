@@ -1,4 +1,4 @@
-function New-CoinbaseLimitOrder {
+function New-CoinbaseProLimitOrder {
 
     Param(
     [Parameter(Mandatory=$true)] $APIKey,
@@ -50,7 +50,7 @@ function New-CoinbaseLimitOrder {
     Post Only: $PostOnly
     OrderID: $OrderID"
 
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
 
 }

@@ -1,4 +1,4 @@
-function Invoke-CoinbaseRequest {
+function Invoke-CoinbaseProRequest {
 
     Param (
     [Parameter()] $Request    
@@ -85,7 +85,7 @@ Function Test-Product {
         [Parameter(Position=0)] [string] $Product   
         )
 
-    $ValidProducts = Import-Csv "$env:APPDATA/CoinbaseProPS-products.csv"
+    $ValidProducts = Import-Csv "$env:APPDATA/CoinbaseProPS-Products.csv"
 
     if ($ValidProducts.id.Contains($Product.ToUpper())) {
         Return $true

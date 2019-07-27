@@ -1,33 +1,39 @@
-function Get-CoinbaseOrders {
+function Get-CoinbaseProFills {
         
     Param(
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,   
+    [parameter()]$OrderID,
     [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [Parameter()][ValidateSet("open","pending","active")] $Status,
     [Parameter()] $Before,
     [Parameter()] $After,
     [Parameter()] $Limit,
     [parameter()] [switch] $SandboxAPI
     )
-    
+
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
     $api.key = "$APIKey"
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
-    $api.url = "/orders"
+    $api.url = "/fills"
     $api.method = 'GET'
+
+    if ($ProductID -and $OrderID) 
+    {
+        Write-Error "The productID and OrderID parameters cannot be used together."
+        Break
+    }
 
     $ProductID = $ProductID.toUpper()
 
-    if ($Status -or $ProductID -or $Before -or $After -or $Limit) 
+    if ($OrderID -or $ProductID -or $Before -or $After -or $Limit) 
     {
-        
+    
         $array = @{}
-        if ($Status) {$array.Add("status","$Status")}
-        if ($ProductID) {$array.Add("product","$ProductID")}
+        if ($OrderID) {$array.Add("order_id","$OrderID")}
+        if ($ProductID) {$array.Add("product_id","$ProductID")}
         if ($Before) {$array.Add("before","$Before")}
         if ($After) {$array.Add("after","$After")}
         if ($Limit) {$array.Add("limit","$Limit")}
@@ -35,16 +41,15 @@ function Get-CoinbaseOrders {
         $api.url += '?'
         ForEach ($itm in $array) 
         {
-            if ($array.product) {$api.url += "&product_id=$ProductID"}
-            if ($array.status) {$api.url += "&status=$Status"}
+            if ($array.order) {$api.url += "&order_id=$OrderID"}
+            if ($array.product_id) {$api.url += "&product_id=$ProductID"}
             if ($array.before) {$api.url += "&before=$Before"}
             if ($array.after) {$api.url += "&after=$After"}
             if ($array.limit) {$api.url += "&limit=$Limit"}            
         }
 
         Write-Debug $api.url
-
-        $response = Invoke-CoinbaseRequest $api
+        $response = Invoke-CoinbaseProRequest $api
         Write-Output $response
     }
 }

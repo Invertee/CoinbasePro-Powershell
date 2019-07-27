@@ -1,4 +1,4 @@
-function Stop-CoinbaseOrder {
+function Stop-CoinbaseProOrder {
     
     Param(
     [Parameter()] [string] $OrderID,
@@ -26,6 +26,6 @@ function Stop-CoinbaseOrder {
     $api.method = 'DELETE'
 
 
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
     }

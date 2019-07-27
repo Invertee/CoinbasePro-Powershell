@@ -1,25 +1,23 @@
-function Get-CoinbaseProductOrderBook {
+function Get-CoinbaseProProductTrades {
         
     Param(
     [Parameter(Mandatory=$false)] $APIKey,
     [Parameter(Mandatory=$false)] $APISecret,
-    [Parameter(Mandatory=$false)] $APIPhrase,  
-    [parameter()][ValidateSet("1","2","3")]$level = 1,
+    [Parameter(Mandatory=$false)] $APIPhrase,     
     [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
 
-    $api = Get-BlankAPI -SandboxApi:$SandboxAPI 
+    $api = Get-BlankAPI -SandboxAPI:$SandboxAPI        
     $api.key = "$APIKey"
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
     $ProductID = $ProductID.toLower()
 
-    $api.url = "/products/$ProductID/book"
+    $api.url = "/products/$ProductID/trades"
     $api.method = 'GET'
-    if ($Level) {$api.url += "?level=$level"}
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
 
     Write-Output $response
 }

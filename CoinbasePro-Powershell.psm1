@@ -1,29 +1,37 @@
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Recurse | Foreach-Object{ . $_.FullName }
 
 $FunctionsToExport = @(
-    'Get-CoinbaseAccount',
-    'Get-CoinbaseAccountHistory',
-    'Get-CoinbaseAccountHolds',
-    'Get-CoinbaseProducts',
-    'Get-CoinbaseCurrencies',
-    'Get-CoinbaseTime',
-    'Get-CoinbaseFills',
-    'Get-CoinbaseOrder',
-    'Get-CoinbaseOrders',
-    'Get-CoinbaseProductOrderBook',
-    'Get-CoinbaseProductTicker',
-    'Get-CoinbaseProductTrades',
-    'Get-CoinbaseProductStats',
-    'New-CoinbaseLimitOrder',
-    'New-CoinbaseMarketOrder',
-    'New-CoinbaseStopOrder',
-    'Stop-CoinbaseOrder',
-    'Invoke-CoinbaseRequest',
+    'Get-CoinbaseProAccount',
+    'Get-CoinbaseProAccountHistory',
+    'Get-CoinbaseProAccountHolds',
+    'Get-CoinbaseProProducts',
+    'Get-CoinbaseProCurrencies',
+    'Get-CoinbaseProTime',
+    'Get-CoinbaseProFills',
+    'Get-CoinbaseProOrder',
+    'Get-CoinbaseProOrders',
+    'Get-CoinbaseProProductOrderBook',
+    'Get-CoinbaseProProductTicker',
+    'Get-CoinbaseProProductTrades',
+    'Get-CoinbaseProProductStats',
+    'New-CoinbaseProLimitOrder',
+    'New-CoinbaseProMarketOrder',
+    'New-CoinbaseProStopOrder',
+    'Stop-CoinbaseProOrder',
+    'Invoke-CoinbaseProRequest',
     'Get-BlankAPI',
     'Get-HMAC',
     'Test-Currencies'
 
 )
-Get-CoinbaseProducts | Select-Object id | ConvertTo-Csv | out-file "$env:APPDATA/CoinbaseProPS-products.csv" -Force
+$CBProducts = Get-CoinbaseProProducts
+
+if (!$CBProducts) {
+    Throw "Unable to import Coinbase Pro products."
+    Break
+} else {
+    $CBProducts | Select-Object | ConvertTo-Csv | out-file "$env:APPDATA/CoinbaseProPS-products.csv" -Force
+    Write-Host "Coinbase Pro products imported" -ForegroundColor Green
+}
 
 Export-ModuleMember -Function $FunctionsToExport

@@ -1,4 +1,4 @@
-function Get-CoinbaseProductStats {
+function Get-CoinbaseProProductTicker {
         
     Param(
     [Parameter(Mandatory=$false)] $APIKey,
@@ -7,18 +7,18 @@ function Get-CoinbaseProductStats {
     [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
     [parameter()] [switch] $SandboxAPI
     )
-    
-    $api = Get-BlankAPI -SandboxAPI:$SandboxAPI        
+
+    $api = Get-BlankAPI -SandboxAPI:$SandboxAPI     
     $api.key = "$APIKey"
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
     $ProductID = $ProductID.toLower()
 
-    $api.url = "/products/$ProductID/stats"
+    $api.url = "/products/$ProductID/ticker"
     $api.method = 'GET'
 
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
 
     Write-Output $response
 }

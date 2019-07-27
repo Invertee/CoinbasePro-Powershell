@@ -4,25 +4,25 @@
 > Install-Module -Name CoinbasePro-Powershell
 
 ###### Public Requests
-* Get-CoinbaseProducts - Gets a list of all tradable products on the exchange
-* Get-CoinbaseCurrencies - Lists all currencies on the exchange
-* Get-CoinbaseTime - Gets current time on the exchange
-* Get-CoinbaseProductOrderBook - Gets a list of the orders on the order book for a specific product
-* Get-CoinbaseProductTicker - Gets ticker information for a specific product
-* Get-CoinbaseProductTrades - Get a list of recent trades for a specific product
-* Get-CoinbaseProductStats - Lists stats about a specific product
+* Get-CoinbaseProProducts - Gets a list of all tradable products on the exchange
+* Get-CoinbaseProCurrencies - Lists all currencies on the exchange
+* Get-CoinbaseProTime - Gets current time on the exchange
+* Get-CoinbaseProProductOrderBook - Gets a list of the orders on the order book for a specific product
+* Get-CoinbaseProProductTicker - Gets ticker information for a specific product
+* Get-CoinbaseProProductTrades - Get a list of recent trades for a specific product
+* Get-CoinbaseProProductStats - Lists stats about a specific product
 
 ###### Authenticated Requests
-* Get-CoinbaseAccount - Gets a list of your Coinbase accounts
-* Get-CoinbaseAccountHistory - Lists the history of a specific account ID (Paginated)
-* Get-CoinbaseAccountHolds - Lists funds on hold on a specific account ID
-* Get-CoinbaseFills - Lists orders which have filled on a specific account ID (Paginated)
-* Get-CoinbaseOrder - Lists order status for specific order
-* Get-CoinbaseOrders - Lists orders for specific product (Paginated)
-* New-CoinbaseLimitOrder - Creates a new limit order for a product
-* New-CoinbaseMarketOrder - Creates a new market order for a product
-* New-CoinbaseStopOrder - Creates a new stop order for a product
-* Stop-CoinbaseOrder - Cancels a specific order or all orders if no ID is specified for a product. 
+* Get-CoinbaseProAccount - Gets a list of your Coinbase accounts
+* Get-CoinbaseProAccountHistory - Lists the history of a specific account ID (Paginated)
+* Get-CoinbaseProAccountHolds - Lists funds on hold on a specific account ID
+* Get-CoinbaseProFills - Lists orders which have filled on a specific account ID (Paginated)
+* Get-CoinbaseProOrder - Lists order status for specific order
+* Get-CoinbaseProOrders - Lists orders for specific product (Paginated)
+* New-CoinbaseProLimitOrder - Creates a new limit order for a product
+* New-CoinbaseProMarketOrder - Creates a new market order for a product
+* New-CoinbaseProStopOrder - Creates a new stop order for a product
+* Stop-CoinbaseProOrder - Cancels a specific order or all orders if no ID is specified for a product. 
 
 #### Authenticating with API key
 Keys and secrets are only stored in memory and should be passed to the module when running commands. 

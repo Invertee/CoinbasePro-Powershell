@@ -1,22 +1,22 @@
-function Get-CoinbaseAccount { 
+function Get-CoinbaseProOrder {
         
     Param(
-    [Parameter()] [string] $AccountID,
+    [parameter(Mandatory=$true)]$OrderID,
     [Parameter(Mandatory=$true)] $APIKey,
     [Parameter(Mandatory=$true)] $APISecret,
     [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI
+    [parameter()] [switch] $SandboxAPI 
     )
-    
+
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
     $api.key = "$APIKey"
     $api.secret = "$APISecret"
     $api.passphrase = "$APIPhrase"
 
+    $api.url = "/orders/$OrderID"
     $api.method = 'GET'
-    $api.url = '/accounts'
-    If ($AccountID) {$api.url += "/$AccountID"}
-    $response = Invoke-CoinbaseRequest $api
-    Write-Output $response
 
+    Write-Debug $api.url
+    $response = Invoke-CoinbaseProRequest $api
+    Write-Output $response
 }

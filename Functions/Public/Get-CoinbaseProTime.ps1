@@ -1,4 +1,4 @@
-function Get-CoinbaseTime {
+function Get-CoinbaseProTime {
         
     Param(
     [Parameter(Mandatory=$false)] $APIKey,
@@ -14,6 +14,6 @@ function Get-CoinbaseTime {
 
     $api.method = 'GET'
     $api.url = "/time"
-    $response = Invoke-CoinbaseRequest $api
+    $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
 }

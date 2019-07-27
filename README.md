@@ -13,16 +13,19 @@
 * Get-CoinbaseProProductStats - Lists stats about a specific product
 
 ###### Authenticated Requests
-* Get-CoinbaseProAccount - Gets a list of your Coinbase accounts
-* Get-CoinbaseProAccountHistory - Lists the history of a specific account ID (Paginated)
-* Get-CoinbaseProAccountHolds - Lists funds on hold on a specific account ID
-* Get-CoinbaseProFills - Lists orders which have filled on a specific account ID (Paginated)
-* Get-CoinbaseProOrder - Lists order status for specific order
-* Get-CoinbaseProOrders - Lists orders for specific product (Paginated)
-* New-CoinbaseProLimitOrder - Creates a new limit order for a product
-* New-CoinbaseProMarketOrder - Creates a new market order for a product
-* New-CoinbaseProStopOrder - Creates a new stop order for a product
-* Stop-CoinbaseProOrder - Cancels a specific order or all orders if no ID is specified for a product. 
+* Get-CoinbaseProAccount - Gets a list of your Coinbase accounts. *(Requires view or trade permission)*
+* Get-CoinbaseProAccountHistory - Lists the history of a specific account ID (Paginated) *(Requires view or trade permission)*
+* Get-CoinbaseProAccountHolds - Lists funds on hold on a specific account ID *(Requires view or trade permission)*
+* Get-CoinbaseProFills - Lists orders which have filled on a specific account ID (Paginated). *(Requires view or trade permission)*
+* Get-CoinbaseProOrder - Lists order status for specific order. *(Requires view or trade permission)*
+* Get-CoinbaseProOrders - Lists orders for specific product (Paginated). *(Requires view or trade permission)*
+* Get-CoinbaseProFees - Lists taker & maker fees as well as 30 day trailing volume.
+* New-CoinbaseProLimitOrder - Creates a new limit order for a product. *(Requires trade permission)*
+* New-CoinbaseProMarketOrder - Creates a new market order for a product. *(Requires trade permission)*
+* New-CoinbaseProStopOrder - Creates a new stop order for a product. *(Requires trade permission)*
+* Remove-CoinbaseProOrder - Cancels a specific order or all orders if no ID is specified for the specified product. *(Requires trade permission)*
+* Get-CoinbaseProPaymentMethods - Gets list of payment methods listed in Coinbase Pro *(Requires transfer permission)*
+
 
 #### Authenticating with API key
 Keys and secrets are only stored in memory and should be passed to the module when running commands. 

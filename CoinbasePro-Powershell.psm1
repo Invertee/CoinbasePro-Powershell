@@ -18,6 +18,7 @@ $FunctionsToExport = @(
     'New-CoinbaseProLimitOrder',
     'New-CoinbaseProMarketOrder',
     'New-CoinbaseProStopOrder',
+    'Get-CoinbaseProPaymentMethods',
     'Remove-CoinbaseProOrder',
     'Invoke-CoinbaseProRequest',
     'Get-BlankAPI',

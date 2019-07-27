@@ -1,4 +1,4 @@
-function Get-CoinbaseProAccount { 
+function Get-CoinbaseProAccounts { 
         
     Param(
     [Parameter()] [string] $AccountID,

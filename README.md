@@ -1,7 +1,9 @@
-### Powershell Module for accessing the Coinbase Pro currency exchange API. 
+## Powershell Module for accessing the Coinbase Pro currency exchange API. 
 
 #### Install (Requires PowerShellGet)
 > Install-Module -Name CoinbasePro-Powershell
+
+#### Usage 
 
 ###### Public Requests
 * Get-CoinbaseProProducts - Gets a list of all tradable products on the exchange

@@ -39,4 +39,21 @@ if (!$CBProducts -or !$CBCurrencies) {
     Write-Host "Coinbase Pro products and currencies imported" -ForegroundColor Green
 }
 
+$ProductsScriptBlock = {
+    $CBProducts | Select-Object -ExpandProperty id | ForEach-Object {
+        "$_"
+    }
+}
+
+Register-ArgumentCompleter -CommandName Get-CoinbaseProOrders -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Get-CoinbaseProFills -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName New-CoinbaseProLimitOrder -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName New-CoinbaseProMarketOrder -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName New-CoinbaseProStopOrder -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Remove-CoinbaseProOrder -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Get-CoinbaseProProductOrderBook -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Get-CoinbaseProProductStats -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Get-CoinbaseProProductTicker -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Register-ArgumentCompleter -CommandName Get-CoinbaseProProductTrades -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+
 Export-ModuleMember -Function $FunctionsToExport

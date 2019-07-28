@@ -12,7 +12,7 @@ function Invoke-CoinbaseProWithdrawal {
     [parameter()] $DestinationTag 
     )
 
-    if ($PaymentMethodID -and ($CoinbaseAccountID -or $CryptoAddress)) 
+    if (($PaymentMethodID -and ($CoinbaseAccountID -or $CryptoAddress)) -or ($CoinbaseAccountID -and ($PaymentMethodID -or $CryptoAddress))) 
     {
         Write-Error "The PaymentMethodID, CoinbaseAccountID and CryptoAddress parameters cannot be used together."
         Break
@@ -41,7 +41,6 @@ function Invoke-CoinbaseProWithdrawal {
         $api.url = "/withdrawals/coinbase-account"
         $post.coinbase_account_id = $CoinbaseAccountID
     }
-
     if ($CryptoAddress) {
         $api.url = "/withdrawals/crypto"
         $post.crypto_address = $CryptoAddress

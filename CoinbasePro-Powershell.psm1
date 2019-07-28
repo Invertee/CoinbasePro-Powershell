@@ -1,9 +1,12 @@
+Get-ChildItem -Path $PSScriptRoot -Recurse -File | Unblock-File
+
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Recurse | Foreach-Object{ . $_.FullName }
 
 $FunctionsToExport = @(
     'Get-CoinbaseAccounts',
     'Get-CoinbaseProAccounts',
     'Get-CoinbaseProAccountHistory',
+    'Get-CoinbaseProFees',
     'Get-CoinbaseProAccountHolds',
     'Get-CoinbaseProProducts',
     'Get-CoinbaseProCurrencies',

@@ -15,7 +15,8 @@
 * Get-CoinbaseProProductStats - Lists stats about a specific product
 
 ###### Authenticated Requests
-* Get-CoinbaseProAccount - Gets a list of your Coinbase accounts. *(Requires view or trade permission)*
+* Get-CoinbaseAccounts - Gets a list of your Coinbase accounts. *(Requires view or trade permission)*
+* Get-CoinbaseProAccounts - Gets a list of your Coinbase Pro accounts or specify a specific account to query. *(Requires view or trade permission)*
 * Get-CoinbaseProAccountHistory - Lists the history of a specific account ID (Paginated) *(Requires view or trade permission)*
 * Get-CoinbaseProAccountHolds - Lists funds on hold on a specific account ID *(Requires view or trade permission)*
 * Get-CoinbaseProFills - Lists orders which have filled on a specific account ID (Paginated). *(Requires view or trade permission)*

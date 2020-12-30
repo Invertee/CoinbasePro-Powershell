@@ -7,7 +7,8 @@ function Invoke-CoinbaseProDeposit {
     [parameter(Mandatory=$true)]$Amount,
     [parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
     [parameter()]$PaymentMethodID,
-    [parameter()] $CoinbaseAccountID
+    [parameter()] $CoinbaseAccountID,
+    [parameter()] [switch] $SandboxAPI 
     )
 
     if ($PaymentMethodID -and $CoinbaseAccountID) 

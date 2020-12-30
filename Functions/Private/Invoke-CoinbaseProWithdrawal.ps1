@@ -9,7 +9,8 @@ function Invoke-CoinbaseProWithdrawal {
     [parameter()]$PaymentMethodID,
     [parameter()] $CoinbaseAccountID,
     [parameter()] $CryptoAddress,
-    [parameter()] $DestinationTag 
+    [parameter()] $DestinationTag,
+    [parameter()] [switch] $SandboxAPI 
     )
 
     if (($PaymentMethodID -and ($CoinbaseAccountID -or $CryptoAddress)) -or ($CoinbaseAccountID -and ($PaymentMethodID -or $CryptoAddress))) 

@@ -85,7 +85,7 @@ Function Test-Product {
         [Parameter(Position=0)] [string] $Product   
         )
 
-    $ValidProducts = Import-Csv "$env:APPDATA/CoinbaseProPS-Products.csv"
+    $ValidProducts = Import-Csv "$([system.io.path]::GetTempPath())/CoinbaseProPS-Products.csv"
 
     if ($ValidProducts.id.Contains($Product.ToUpper())) {
         Return $true
@@ -102,7 +102,7 @@ Function Test-Currency {
         [Parameter(Position=0)] [string] $Currency   
         )
 
-    $ValidCurrencies = Import-Csv "$env:APPDATA/CoinbaseProPS-currencies.csv"
+    $ValidCurrencies = Import-Csv "$([system.io.path]::GetTempPath())/CoinbaseProPS-currencies.csv"
 
     if ($ValidCurrencies.id.Contains($Currency.ToUpper())) {
         Return $true

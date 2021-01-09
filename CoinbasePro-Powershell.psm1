@@ -24,7 +24,11 @@ $FunctionsToExport = @(
     'Get-CoinbaseProPaymentMethods',
     'Invoke-CoinbaseProDeposit',
     'Invoke-CoinbaseProWithdrawal',
-    'Remove-CoinbaseProOrder'
+    'Remove-CoinbaseProOrder',
+    'Get-CoinbaseProTransfers',
+    'Get-CoinbaseProProfiles',
+    'Get-CoinbaseProProfile',
+    'Invoke-CoinbaseProProfileTransfer'
 )
 
 $CBProducts = Get-CoinbaseProProducts 

@@ -24,7 +24,11 @@ $FunctionsToExport = @(
     'Get-CoinbaseProPaymentMethods',
     'Invoke-CoinbaseProDeposit',
     'Invoke-CoinbaseProWithdrawal',
-    'Remove-CoinbaseProOrder'
+    'Remove-CoinbaseProOrder',
+    'Get-CoinbaseProTransfers',
+    'Get-CoinbaseProProfiles',
+    'Get-CoinbaseProProfile',
+    'Invoke-CoinbaseProProfileTransfer'
 )
 
 $CBProducts = Get-CoinbaseProProducts 
@@ -34,8 +38,8 @@ if (!$CBProducts -or !$CBCurrencies) {
     Throw "Unable to import Coinbase Pro products & currencies."
     Break
 } else {
-    $CBProducts | select-object id | ConvertTo-Csv | out-file "$env:APPDATA/CoinbaseProPS-products.csv" -Force
-    $CBCurrencies | select-object id | ConvertTo-Csv | out-file "$env:APPDATA/CoinbaseProPS-currencies.csv" -Force
+    $CBProducts | select-object id | ConvertTo-Csv | out-file "$([system.io.path]::GetTempPath())/CoinbaseProPS-products.csv" -Force
+    $CBCurrencies | select-object id | ConvertTo-Csv | out-file "$([system.io.path]::GetTempPath())CoinbaseProPS-currencies.csv" -Force
     Write-Host "Coinbase Pro products and currencies imported" -ForegroundColor Green
 }
 

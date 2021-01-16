@@ -1,4 +1,4 @@
-function Get-CoinbaseProBuyingPower { 
+function Get-CoinbaseProMarginBuyingPower { 
     Param(
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,

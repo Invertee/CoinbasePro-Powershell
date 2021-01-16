@@ -69,8 +69,8 @@ $ProductFunctions = @(
     'Get-CoinbaseProProductStats',
     'Get-CoinbaseProProductTicker',
     'Get-CoinbaseProProductTrades',
-    'Get-CoinbaseProMarginInfo',
-    'Get-CoinbaseProBuyingPower'
+    'Get-CoinbaseProMarginMarginInfo',
+    'Get-CoinbaseProMarginBuyingPower'
 )
 
 Foreach ($function in $ProductFunctions) {
@@ -79,7 +79,7 @@ Foreach ($function in $ProductFunctions) {
 
 $CurrencyFunctions = @(
     'New-CoinbaseProConversionOrder',
-    'Get-CoinbaseProWithdrawalPower'
+    'Get-CoinbaseProMarginWithdrawalPower'
 )
 
 Foreach ($function in $CurrencyFunctions) {

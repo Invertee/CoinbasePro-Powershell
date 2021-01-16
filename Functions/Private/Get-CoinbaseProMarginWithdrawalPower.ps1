@@ -1,4 +1,4 @@
-function Get-CoinbaseProWithdrawalPower { 
+function Get-CoinbaseProMarginWithdrawalPower { 
     Param(
         [Parameter(Mandatory=$true)] $APIKey,
         [Parameter(Mandatory=$true)] $APISecret,

@@ -26,6 +26,7 @@
 * New-CoinbaseProLimitOrder - Creates a new limit order for a product. *(Requires trade permission)*
 * New-CoinbaseProMarketOrder - Creates a new market order for a product. *(Requires trade permission)*
 * New-CoinbaseProStopOrder - Creates a new stop order for a product. *(Requires trade permission)*
+* New-CoinbaseProConversion - Converts currency to stablecoin. *(Requires trade permission)*
 * Remove-CoinbaseProOrder - Cancels a specific order or all orders if no ID is specified for the specified product. *(Requires trade permission)*
 * Get-CoinbaseProPaymentMethods - Gets list of payment methods listed in Coinbase Pro *(Requires transfer permission)*
 * Invoke-CoinbaseProWithdrawal - Withdraws funds from selected currency to a payment method, coinbase account or crypto address. *(Requires transfer permission)*

@@ -1,5 +1,4 @@
 Get-ChildItem -Path $PSScriptRoot -Recurse -File | Unblock-File
-
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Recurse | Foreach-Object{ . $_.FullName }
 
 $FunctionsToExport = @(
@@ -21,6 +20,7 @@ $FunctionsToExport = @(
     'New-CoinbaseProLimitOrder',
     'New-CoinbaseProMarketOrder',
     'New-CoinbaseProStopOrder',
+    'New-CoinbaseProConversionOrder',
     'Get-CoinbaseProPaymentMethods',
     'Invoke-CoinbaseProDeposit',
     'Invoke-CoinbaseProWithdrawal',
@@ -43,13 +43,19 @@ if (!$CBProducts -or !$CBCurrencies) {
     Write-Host "Coinbase Pro products and currencies imported" -ForegroundColor Green
 }
 
-$ProductsScriptBlock = {
+$Products = {
     $CBProducts | Select-Object -ExpandProperty id | ForEach-Object {
         "$_"
     }
 }
 
-$ProdFunctions = @(
+$Currencies = {
+    $CBCurrencies | Select-Object -ExpandProperty id | ForEach-Object {
+        "$_"
+    }
+}
+
+$ProductFunctions = @(
     "New-CoinbaseProLimitOrder",
     "Get-CoinbaseProFills",
     "New-CoinbaseProMarketOrder",
@@ -62,8 +68,17 @@ $ProdFunctions = @(
     "Get-CoinbaseProProductTrades"
 )
 
-Foreach ($function in $ProdFunctions) {
-    Register-ArgumentCompleter -CommandName $function -ParameterName ProductID -ScriptBlock $ProductsScriptBlock
+Foreach ($function in $ProductFunctions) {
+    Register-ArgumentCompleter -CommandName $function -ParameterName 'ProductID' -ScriptBlock $Products
+}
+
+$CurrencyFunctions = @(
+    "New-CoinbaseProConversionOrder"
+)
+
+Foreach ($function in $CurrencyFunctions) {
+    Register-ArgumentCompleter -CommandName $function -ParameterName 'To' -ScriptBlock $Currencies
+    Register-ArgumentCompleter -CommandName $function -ParameterName 'From' -ScriptBlock $Currencies
 }
 
 Export-ModuleMember -Function $FunctionsToExport

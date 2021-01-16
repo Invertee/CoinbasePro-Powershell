@@ -28,7 +28,10 @@ $FunctionsToExport = @(
     'Get-CoinbaseProTransfers',
     'Get-CoinbaseProProfiles',
     'Get-CoinbaseProProfile',
-    'Invoke-CoinbaseProProfileTransfer'
+    'Invoke-CoinbaseProProfileTransfer',
+    'Get-CoinbaseProMarginInfo',
+    'Get-CoinbaseProBuyingPower',
+    'Get-CoinbaseProWithdrawalPower'
 )
 
 $CBProducts = Get-CoinbaseProProducts 
@@ -40,7 +43,7 @@ if (!$CBProducts -or !$CBCurrencies) {
 } else {
     $CBProducts | select-object id | ConvertTo-Csv | out-file "$([system.io.path]::GetTempPath())/CoinbaseProPS-products.csv" -Force
     $CBCurrencies | select-object id | ConvertTo-Csv | out-file "$([system.io.path]::GetTempPath())CoinbaseProPS-currencies.csv" -Force
-    Write-Host "Coinbase Pro products and currencies imported" -ForegroundColor Green
+    Write-Host "Coinbase Pro Module Imported: $($CBProducts.count) Tradable Products and $($CBCurrencies.count) Currencies" -ForegroundColor Green
 }
 
 $Products = {
@@ -56,16 +59,18 @@ $Currencies = {
 }
 
 $ProductFunctions = @(
-    "New-CoinbaseProLimitOrder",
-    "Get-CoinbaseProFills",
-    "New-CoinbaseProMarketOrder",
-    "New-CoinbaseProStopOrder",
-    "Get-CoinbaseProOrders",
-    "Remove-CoinbaseProOrder",
-    "Get-CoinbaseProProductOrderBook",
-    "Get-CoinbaseProProductStats",
-    "Get-CoinbaseProProductTicker",
-    "Get-CoinbaseProProductTrades"
+    'New-CoinbaseProLimitOrder',
+    'Get-CoinbaseProFills',
+    'New-CoinbaseProMarketOrder',
+    'New-CoinbaseProStopOrder',
+    'Get-CoinbaseProOrders',
+    'Remove-CoinbaseProOrder',
+    'Get-CoinbaseProProductOrderBook',
+    'Get-CoinbaseProProductStats',
+    'Get-CoinbaseProProductTicker',
+    'Get-CoinbaseProProductTrades',
+    'Get-CoinbaseProMarginInfo',
+    'Get-CoinbaseProBuyingPower'
 )
 
 Foreach ($function in $ProductFunctions) {
@@ -73,12 +78,14 @@ Foreach ($function in $ProductFunctions) {
 }
 
 $CurrencyFunctions = @(
-    "New-CoinbaseProConversionOrder"
+    'New-CoinbaseProConversionOrder',
+    'Get-CoinbaseProWithdrawalPower'
 )
 
 Foreach ($function in $CurrencyFunctions) {
     Register-ArgumentCompleter -CommandName $function -ParameterName 'To' -ScriptBlock $Currencies
     Register-ArgumentCompleter -CommandName $function -ParameterName 'From' -ScriptBlock $Currencies
+    Register-ArgumentCompleter -CommandName $function -ParameterName 'Currency' -ScriptBlock $Currencies
 }
 
 Export-ModuleMember -Function $FunctionsToExport

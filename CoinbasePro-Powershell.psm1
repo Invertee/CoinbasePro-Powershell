@@ -35,7 +35,8 @@ $FunctionsToExport = @(
     'Get-CoinbaseProMarginExitPlan',
     'Get-CoinbaseProMarginStatus',
     'Get-CoinbaseProMarginPositionRefreshAmounts',
-    'Get-CoinbaseProMarginLiquidationHistory'
+    'Get-CoinbaseProMarginLiquidationHistory',
+    'Get-CoinbaseProTrailingVolume'
 )
 
 $CBProducts = Get-CoinbaseProProducts 

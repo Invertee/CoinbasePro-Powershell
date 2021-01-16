@@ -24,6 +24,7 @@
 * Get-CoinbaseProOrder - Lists order status for specific order. *(Requires view or trade permission)*
 * Get-CoinbaseProOrders - Lists orders for specific product (Paginated). *(Requires view or trade permission)*
 * Get-CoinbaseProFees - Lists taker & maker fees as well as 30 day trailing volume. *(Requires view or trade permission)*
+* Get-CoinbaseTrailingVolume - This request will return your 30-day trailing volume for all products of the API key's profile. *(Requires view or trade permission)*
 ##### Orders
 * New-CoinbaseProLimitOrder - Creates a new limit order for a product. *(Requires trade permission)*
 * New-CoinbaseProMarketOrder - Creates a new market order for a product. *(Requires trade permission)*

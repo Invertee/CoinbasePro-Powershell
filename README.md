@@ -38,6 +38,7 @@
 * Get-CoinbaseProMarginInfo - Get information about your margin profile, such as your current equity percentage. *(Requires view or trade permission)*
 * Get-CoinbaseProMarginBuyingPower - Get your buying power and selling power for a particular product. *(Requires view or trade permission)*
 * Get-CoinbaseProMarginWithdrawalPower - Returns the max amount of currency that you can withdraw from your margin profile. *(Requires view or trade permission)*
+* Get-CoinbaseProMarginExitPlan - Returns a liquidation strategy that can be performed to get your equity percentage back to an acceptable level. *(Requires view or trade permission)*
 
 #### Authenticating with API key
 Keys and secrets are only stored in memory and should be passed to the module when running commands. 

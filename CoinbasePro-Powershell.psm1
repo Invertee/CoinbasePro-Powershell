@@ -30,8 +30,9 @@ $FunctionsToExport = @(
     'Get-CoinbaseProProfile',
     'Invoke-CoinbaseProProfileTransfer',
     'Get-CoinbaseProMarginInfo',
-    'Get-CoinbaseProBuyingPower',
-    'Get-CoinbaseProWithdrawalPower'
+    'Get-CoinbaseProMarginBuyingPower',
+    'Get-CoinbaseProMarginWithdrawalPower',
+    'Get-CoinbaseProMarginExitPlan'
 )
 
 $CBProducts = Get-CoinbaseProProducts 

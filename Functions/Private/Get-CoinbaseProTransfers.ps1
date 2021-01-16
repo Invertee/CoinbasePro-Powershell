@@ -1,10 +1,9 @@
-function Get-CoinbaseProTransfers { 
-        
+function Get-CoinbaseProTransfers {   
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -16,5 +15,4 @@ function Get-CoinbaseProTransfers {
     $api.url = '/transfers'
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

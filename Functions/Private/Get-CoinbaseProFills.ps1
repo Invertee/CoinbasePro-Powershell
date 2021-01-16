@@ -1,15 +1,14 @@
 function Get-CoinbaseProFills {
-        
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,   
-    [parameter()]$OrderID,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [Parameter()] $Before,
-    [Parameter()] $After,
-    [Parameter()] $Limit,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,   
+        [parameter()]$OrderID,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit,
+        [parameter()] [switch] $SandboxAPI
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI

@@ -1,13 +1,12 @@
 function Get-CoinbaseProAccountHistory { 
-
     Param([parameter(Mandatory=$true)]$AccountID,
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [Parameter()] $Before,
-    [Parameter()] $After,
-    [Parameter()] $Limit = "20",
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit = "20",
+        [parameter()] [switch] $SandboxAPI
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI

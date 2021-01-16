@@ -1,17 +1,16 @@
 function New-CoinbaseProStopOrder {
-                
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [parameter()]$OrderID,
-    [parameter(Mandatory=$true)]$Price,
-    [parameter()]$Size,
-    [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
-    [parameter()]$Funds,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
+        [parameter()]$OrderID,
+        [parameter(Mandatory=$true)]$Price,
+        [parameter()]$Size,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()]$Funds,
+        [parameter()] [switch] $SandboxAPI
     )
 
     if ($Size -and $Funds) {
@@ -55,5 +54,4 @@ function New-CoinbaseProStopOrder {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-            
 }

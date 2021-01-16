@@ -1,11 +1,10 @@
 function Get-CoinbaseProAccounts { 
-        
     Param(
-    [Parameter()] [string] $AccountID,
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter()] [string] $AccountID,
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -18,5 +17,4 @@ function Get-CoinbaseProAccounts {
     If ($AccountID) {$api.url += "/$AccountID"}
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

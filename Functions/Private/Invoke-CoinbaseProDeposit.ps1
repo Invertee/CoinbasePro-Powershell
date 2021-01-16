@@ -1,14 +1,13 @@
 function Invoke-CoinbaseProDeposit {
-
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [parameter(Mandatory=$true)]$Amount,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
-    [parameter()]$PaymentMethodID,
-    [parameter()] $CoinbaseAccountID,
-    [parameter()] [switch] $SandboxAPI 
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [parameter(Mandatory=$true)]$Amount,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
+        [parameter()]$PaymentMethodID,
+        [parameter()] $CoinbaseAccountID,
+        [parameter()] [switch] $SandboxAPI 
     )
 
     if ($PaymentMethodID -and $CoinbaseAccountID) 
@@ -53,5 +52,4 @@ function Invoke-CoinbaseProDeposit {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

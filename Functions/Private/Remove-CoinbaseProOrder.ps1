@@ -1,12 +1,11 @@
 function Remove-CoinbaseProOrder {
-    
     Param(
-    [Parameter()] [string] $OrderID,
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,    
-    [parameter()][ValidateScript({ Test-Product $_ })]$ProductID,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter()] [string] $OrderID,
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,    
+        [parameter()][ValidateScript({ Test-Product $_ })]$ProductID,
+        [parameter()] [switch] $SandboxAPI
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -25,7 +24,6 @@ function Remove-CoinbaseProOrder {
     if ($ProductID) {$api.url += "?product_id=$ProductID"}
     $api.method = 'DELETE'
 
-
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-    }
+}

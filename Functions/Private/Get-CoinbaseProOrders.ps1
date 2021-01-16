@@ -1,15 +1,14 @@
 function Get-CoinbaseProOrders {
-        
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,   
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [Parameter()][ValidateSet("open","pending","active")] $Status,
-    [Parameter()] $Before,
-    [Parameter()] $After,
-    [Parameter()] $Limit,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,   
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
+        [Parameter()][ValidateSet("open","pending","active")] $Status,
+        [Parameter()] $Before,
+        [Parameter()] $After,
+        [Parameter()] $Limit,
+        [parameter()] [switch] $SandboxAPI
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI

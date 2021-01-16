@@ -1,16 +1,15 @@
 function Invoke-CoinbaseProWithdrawal {
-
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [parameter(Mandatory=$true)]$Amount,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
-    [parameter()]$PaymentMethodID,
-    [parameter()] $CoinbaseAccountID,
-    [parameter()] $CryptoAddress,
-    [parameter()] $DestinationTag,
-    [parameter()] [switch] $SandboxAPI 
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [parameter(Mandatory=$true)]$Amount,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
+        [parameter()]$PaymentMethodID,
+        [parameter()] $CoinbaseAccountID,
+        [parameter()] $CryptoAddress,
+        [parameter()] $DestinationTag,
+        [parameter()] [switch] $SandboxAPI 
     )
 
     if (($PaymentMethodID -and ($CoinbaseAccountID -or $CryptoAddress)) -or ($CoinbaseAccountID -and ($PaymentMethodID -or $CryptoAddress))) 
@@ -66,5 +65,4 @@ function Invoke-CoinbaseProWithdrawal {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

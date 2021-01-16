@@ -1,10 +1,10 @@
 function Get-CoinbaseProFees { 
         
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -16,5 +16,4 @@ function Get-CoinbaseProFees {
     $api.url = '/fees'
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

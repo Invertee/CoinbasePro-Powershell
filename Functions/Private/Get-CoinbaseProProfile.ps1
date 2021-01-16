@@ -1,11 +1,10 @@
 function Get-CoinbaseProProfile { 
-        
     Param(
-    [parameter(Mandatory=$true)]$ProfileID,
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI
+        [parameter(Mandatory=$true)]$ProfileID,
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -17,5 +16,4 @@ function Get-CoinbaseProProfile {
     $api.url = "/profiles/$ProfileID"
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

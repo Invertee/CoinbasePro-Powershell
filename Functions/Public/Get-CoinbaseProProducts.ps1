@@ -1,11 +1,10 @@
 function Get-CoinbaseProProducts {
-        
     Param(
-    [Parameter(Mandatory=$false)] $APIKey,
-    [Parameter(Mandatory=$false)] $APISecret,
-    [Parameter(Mandatory=$false)] $APIPhrase,
-    [Parameter(Mandatory=$false)] [scriptblock] $Filter,
-    [parameter()] [switch] $SandboxAPI                    
+        [Parameter(Mandatory=$false)] $APIKey,
+        [Parameter(Mandatory=$false)] $APISecret,
+        [Parameter(Mandatory=$false)] $APIPhrase,
+        [Parameter(Mandatory=$false)] [scriptblock] $Filter,
+        [parameter()] [switch] $SandboxAPI                    
     )
     
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI        

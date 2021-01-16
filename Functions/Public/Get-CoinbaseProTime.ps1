@@ -1,10 +1,9 @@
 function Get-CoinbaseProTime {
-        
     Param(
-    [Parameter(Mandatory=$false)] $APIKey,
-    [Parameter(Mandatory=$false)] $APISecret,
-    [Parameter(Mandatory=$false)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI                    
+        [Parameter(Mandatory=$false)] $APIKey,
+        [Parameter(Mandatory=$false)] $APISecret,
+        [Parameter(Mandatory=$false)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI                    
     )
 
     $api = Get-BlankAPI -SandboxApi:$SandboxAPI 

@@ -1,16 +1,15 @@
 function New-CoinbaseProMarketOrder {
-        
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [parameter()]$OrderID,
-    [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
-    [parameter()]$Size,
-    [parameter()]$Funds,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
+        [parameter()]$OrderID,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()]$Size,
+        [parameter()]$Funds,
+        [parameter()] [switch] $SandboxAPI
     )
 
     if ($Size -and $Funds) {
@@ -52,5 +51,4 @@ function New-CoinbaseProMarketOrder {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-    
 }

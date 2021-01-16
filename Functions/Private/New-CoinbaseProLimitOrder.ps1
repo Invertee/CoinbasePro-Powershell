@@ -1,19 +1,18 @@
 function New-CoinbaseProLimitOrder {
-
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
-    [parameter(Mandatory=$true)]$Price,
-    [parameter(Mandatory=$true)]$Size,
-    [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
-    [parameter()]$OrderID,
-    [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
-    [parameter()][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,
-    [parameter()]$CancelAfter,
-    [parameter()][ValidateSet("true","false")]$PostOnly,
-    [parameter()] [switch] $SandboxAPI
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [parameter(Mandatory=$true)][ValidateSet('sell','buy',IgnoreCase = $false)]$Side,
+        [parameter(Mandatory=$true)]$Price,
+        [parameter(Mandatory=$true)]$Size,
+        [parameter(Mandatory=$true)][ValidateScript({ Test-Product $_ })]$ProductID,
+        [parameter()]$OrderID,
+        [parameter()][ValidateSet("dd","co","cn","cb")][string]$STP,
+        [parameter()][ValidateSet("GTC","GTT","IOC","FOK")][string]$TimeinForce,
+        [parameter()]$CancelAfter,
+        [parameter()][ValidateSet("true","false")]$PostOnly,
+        [parameter()] [switch] $SandboxAPI
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -52,5 +51,4 @@ function New-CoinbaseProLimitOrder {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

@@ -1,14 +1,13 @@
 function Invoke-CoinbaseProProfileTransfer {
-
     Param(
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase, 
-    [Parameter(Mandatory=$true)] $Amount,
-    [Parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
-    [Parameter(Mandatory=$true)] $FromID,
-    [Parameter(Mandatory=$true)] $ToID,
-    [Parameter()] [switch] $SandboxAPI 
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase, 
+        [Parameter(Mandatory=$true)] $Amount,
+        [Parameter(Mandatory=$true)][ValidateScript({ Test-Currency $_ })]$Currency,
+        [Parameter(Mandatory=$true)] $FromID,
+        [Parameter(Mandatory=$true)] $ToID,
+        [Parameter()] [switch] $SandboxAPI 
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
@@ -36,5 +35,4 @@ function Invoke-CoinbaseProProfileTransfer {
 
     $response = Invoke-CoinbaseProRequest $api
     Write-Output $response
-
 }

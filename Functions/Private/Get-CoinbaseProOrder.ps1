@@ -1,11 +1,10 @@
 function Get-CoinbaseProOrder {
-        
     Param(
-    [parameter(Mandatory=$true)]$OrderID,
-    [Parameter(Mandatory=$true)] $APIKey,
-    [Parameter(Mandatory=$true)] $APISecret,
-    [Parameter(Mandatory=$true)] $APIPhrase,
-    [parameter()] [switch] $SandboxAPI 
+        [parameter(Mandatory=$true)]$OrderID,
+        [Parameter(Mandatory=$true)] $APIKey,
+        [Parameter(Mandatory=$true)] $APISecret,
+        [Parameter(Mandatory=$true)] $APIPhrase,
+        [parameter()] [switch] $SandboxAPI 
     )
 
     $api = Get-BlankAPI -SandboxAPI:$SandboxAPI
